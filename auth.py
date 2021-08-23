@@ -19,18 +19,25 @@ def add_user(user, password, pwdb):
     write_pwdb(pwdb)
     return
 
+def wrong_pwd_or_no_user(user, password, pwdb):
+    print('Username does not exist or the password is wrong.')
+    answer = input('Add user to the db? ')
+    if answer == 'y':
+        if user in pwdb:
+            pass
+        else:
+            add_user(user, password, pwdb)
+    return
+
 def authenticate(user, password, pwdb):
     if user in pwdb:
         salt, hash_ = pwdb[user]
         if pwhash(salt+password) == hash_:
             print('Successfully authenticated!')
         else:
-            print('Wrong password!!')
+            wrong_pwd_or_no_user(user, password, pwdb)
     else:
-        answer = input('Add user to the db? ')
-        if answer == 'y':
-            add_user(user, password, pwdb)
-
+        wrong_pwd_or_no_user(user, password, pwdb)
     return
 
 def get_random_salt():
@@ -64,5 +71,5 @@ if __name__ == "__main__":
     user, password = get_credentials()
     authenticate(user, password, pwdb)
     write_pwdb(pwdb)
-    print(pwdb)
+    #print(pwdb)
 
