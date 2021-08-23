@@ -15,23 +15,31 @@ def add_user(user, password, pwdb):
 
 
 def authenticate(user, password, pwdb):
-    if user in pwdb:
-        if password == pwdb[user]:
-            print('Successfully authenticated!')
+    answer = input('Do you want to sign in? (y)')
+    if answer == 'y':
+        if user in pwdb:
+            if password == pwdb[user]:
+                print('Successfully authenticated!')
+            else:
+                print('Wrong user name or password!!')
         else:
-            print('Wrong password!!')
+            print('Wrong user name or password!!')
     else:
-        answer = input('Add user to the db? ')
+        answer = input('Do you want to sign up?')
         if answer == 'y':
+            while user in pwdb:
+                print('user name exist, choose a different user name and password')
+                user, password = get_credentials()
             add_user(user, password, pwdb)
+            
 
     return
 
 
 def pwhash(password):
     hash_ = 0
-    for idx, char in enumerate(password):
-        hash_ += (idx+1)*ord(char)
+    for char in password:
+        hash_ += ord(char)
     return hash_
 
 
@@ -55,4 +63,5 @@ if __name__ == "__main__":
     authenticate(user, password, pwdb)
     write_pwdb(pwdb)
     print(pwdb)
+
 
