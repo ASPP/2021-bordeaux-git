@@ -1,10 +1,11 @@
 import os
 import json
+import getpass as gtp
 PWDB_FILENAME = 'pwdb.json'
 
 def get_credentials():
     username = input('Type the username: ')
-    password = input('Type the password: ')
+    password = gtp.getpass('Type the password: ')
     hashed_password = pwhash(password)
     return username, hashed_password
 
