@@ -1,5 +1,6 @@
 import os
 import json
+import hashlib
 PWDB_FILENAME = 'pwdb.json'
 
 def get_credentials():
@@ -29,9 +30,7 @@ def authenticate(user, password, pwdb):
 
 
 def pwhash(password):
-    hash_ = 0
-    for idx, char in enumerate(password):
-        hash_ += (idx+1)*ord(char)
+    hash_ = hashlib.sha256(str(password).encode('utf-8')).hexdigest()
     return hash_
 
 
