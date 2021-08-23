@@ -2,6 +2,7 @@ import os
 import json
 import random
 import string
+import getpass
 
 PWDB_FILENAME = 'pwdb.json'
 SALT_LENGTH = 5
@@ -10,7 +11,7 @@ VALID_CHAR = string.ascii_letters + string.digits + string.punctuation
 
 def get_credentials():
     username = input('Type the username: ')
-    password = input('Type the password: ')
+    password = getpass.getpass('Type the password: ')
     return username, password
 
 def add_user(user, password, pwdb):
