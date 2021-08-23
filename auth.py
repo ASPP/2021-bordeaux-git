@@ -19,7 +19,7 @@ def authenticate(user, password, pwdb):
         if password == pwdb[user]:
             print('Successfully authenticated!')
         else:
-            print('Wrong password!!')
+            print('Invalid login or password!!')
     else:
         answer = input('Add user to the db? ')
         if answer == 'y':
