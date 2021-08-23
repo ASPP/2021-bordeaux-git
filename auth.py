@@ -11,7 +11,7 @@ VALID_CHAR = string.ascii_letters + string.digits + string.punctuation
 
 def get_credentials():
     username = input('Type the username: ')
-    password = getpass('Type the password: ')
+    password = getpass('Type the password: ')  # this will now hide your password while typing
     return username, password
 
 def add_user(user, password, pwdb):
