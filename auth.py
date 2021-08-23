@@ -1,24 +1,30 @@
 import os
 import json
+import random
+import string
+
 PWDB_FILENAME = 'pwdb.json'
+SALT_LENGTH = 5
+VALID_CHAR = string.ascii_letters + string.digits + string.punctuation
+
 
 def get_credentials():
     username = input('Type the username: ')
     password = input('Type the password: ')
-    hashed_password = pwhash(password)
-    return username, hashed_password
+    return username, password
 
 def add_user(user, password, pwdb):
-    pwdb[user] = password
+    salt = get_random_salt()
+    pwdb[user] = (salt, pwhash(salt+password))
     write_pwdb(pwdb)
     return
-
 
 def authenticate(user, password, pwdb):
     answer = input('Do you want to sign in? (y)')
     if answer == 'y':
         if user in pwdb:
-            if password == pwdb[user]:
+            salt, hash_ = pwdb[user]
+            if pwhash(salt+password) == hash_:
                 print('Successfully authenticated!')
             else:
                 print('Wrong user name or password!!')
@@ -35,6 +41,10 @@ def authenticate(user, password, pwdb):
 
     return
 
+def get_random_salt():
+    char_list = random.choices(VALID_CHAR, k=SALT_LENGTH)
+    salt = ''.join(char_list)
+    return salt
 
 def pwhash(password):
     hash_ = 0
