@@ -36,7 +36,7 @@ def authenticate(username, pass_text, pwdb):
             status = True
     return status
 
-def add_user(username, password, salt, paswdb, pwdb_path):
+def add_user(username, password, salt, pwdb, pwdb_path):
     # do not try to add a username twice
     if username in pwdb:
         raise Exception('Username already exists [%s]' %username)
