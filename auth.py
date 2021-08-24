@@ -9,7 +9,7 @@ import tempfile
 PWDB_FLNAME = pathlib.Path('pwdb.json')
 
 # the pw database will be stored in a temporary directory
-PWDB_DEFAULTPATH = tempfile.gettempdir() / PWDB_FLNAME
+PWDB_DEFAULTPATH =  PWDB_FLNAME
 
 # list of valid characters for salt (only ASCII letters + digits + punctuation)
 CHARS = string.ascii_letters + string.digits + string.punctuation
