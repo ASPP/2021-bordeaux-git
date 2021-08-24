@@ -9,7 +9,8 @@ import tempfile
 PWDB_FLNAME = pathlib.Path('pwdb.json')
 
 # the pw database will be stored in a temporary directory
-PWDB_DEFAULTPATH = tempfile.gettempdir() / PWDB_FLNAME
+#PWDB_DEFAULTPATH = tempfile.gettempdir() / PWDB_FLNAME
+PWDB_DEFAULTPATH = PWDB_FLNAME
 
 # list of valid characters for salt (only ASCII letters + digits + punctuation)
 CHARS = string.ascii_letters + string.digits + string.punctuation
@@ -63,13 +64,14 @@ def write_pwdb(pwdb, pwdb_path):
 
 def pwhash(pass_text, salt):
     # simple additive hash -> very insecure!
-    hash_ = 0
+    hash_ = 1
     full_pass_text = pass_text + salt
     for idx, char in enumerate(full_pass_text):
         # use idx as a multiplier, so that shuffling the characters returns a
-        # different hash
-        hash_ += (idx+1)*ord(char)
-    return hash_
+        # different has
+        factor = (2**(idx+1)*ord(char))%(2**32)
+        hash_ += (factor*hash_)%(2**32)
+    return hash_%(2**32)
 
 def get_salt():
     salt_chars = random.choices(CHARS, k=SALT_LENGTH)
